@@ -12,7 +12,7 @@ class UserType extends Seeder
     public function run()
     {
         DB::table('user_types')->delete();
-        $user_types = ['Agent','Client'];
+        $user_types = ['Agency','Client'];
         foreach($user_types as $type){
         	$data[] = [
         		'type' =>	$type

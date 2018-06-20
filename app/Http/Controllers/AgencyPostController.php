@@ -20,7 +20,7 @@ class AgencyPostController extends Controller
         if($validator->fails()){
             return back()->withErrors($validator)->withInput();
         }
-        $type = UserType::where('type',"Agent")->pluck('id')->first();
+        $type = UserType::where('type',"Agency")->pluck('id')->first();
         $agency = new User;
         $agency->name = $request->name;
         $agency->email = $request->email;
