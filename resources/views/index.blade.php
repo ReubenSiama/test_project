@@ -73,7 +73,7 @@
 									<li class="scroll-link"><a href="#getstarted" title="GET STARTED">GET STARTED </a></li> 
 									<li><a href="#" title="BLOG">BLOG</a></li>
 									<li><a href="about.html" title="ABOUT">ABOUT</a></li>
-									<li><a href="client/login.php" title="SIGN IN">SIGN IN</a></li>
+									<li><a href="/login" title="SIGN IN">SIGN IN</a></li>
 								</ul>
 							</div>
 						</div>

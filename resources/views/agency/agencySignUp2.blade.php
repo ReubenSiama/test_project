@@ -27,7 +27,8 @@
 									Tell us about your agency:
 								</h3>
 							</div>
-							<form class="m-form m-form--fit" action="">
+							<form class="m-form m-form--fit" action="/aboutAgency" method="POST">
+								{{ csrf_field() }}
 								<div class="form-group m-form__group">
 									<input class="form-control m-input" type="text" placeholder="Contact name" name="contactName" required>
 								</div>
@@ -39,7 +40,7 @@
 									<input class="form-control m-input" type="text" placeholder="Website" name="website" required>
 								</div>
 								<div class="form-group m-form__group">
-									<select class="form-control m-select2" id="matchLocation" name="matchLocation" multiple="multiple">
+									<select class="form-control m-select2" id="matchLocation" name="matchLocation[]" multiple="multiple">
 												<option value="Any">
 													Worldwide
 												</option>
@@ -74,7 +75,7 @@
 											</select>
 								</div>
 								<div class="form-group m-form__group">
-								<select class="form-control m-select2" id="matchIndustry" name="industry" multiple="multiple" required>
+								<select class="form-control m-select2" id="matchIndustry" name="industry[]" multiple="multiple" required>
 													<option value="automotive">
 														Automotive
 													</option>
@@ -108,7 +109,7 @@
 											</select>
 								</div>
 								<div class="form-group m-form__group">
-									<select class="form-control m_select2_3" id="matchServices" name="services" multiple="multiple">
+									<select class="form-control m_select2_3" id="matchServices" name="services[]" multiple="multiple">
 											
 										<option value="paidSearch">
 											Paid Search
@@ -143,11 +144,9 @@
 								<div class="m-form__actions m-form__actions">
 										<div class="row">
 											<div class="col-lg-12 ml-lg-auto">
-												<a href="agency-signup-step3.php">
-												<button type="button" class="btn btn-primary" style="display: block; margin: 0 auto;">
+												<button type="submit" class="btn btn-primary" style="display: block; margin: 0 auto;">
 													Next
 												</button>
-													</a>
 											</div>
 										</div>
 									</div>

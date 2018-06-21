@@ -18,6 +18,7 @@ class CreateClientTypesTable extends Migration
             $table->integer('agency_id');
             $table->string('budget');
             $table->string('clients_range');
+            $table->string('languages');
             $table->timestamps();
         });
     }

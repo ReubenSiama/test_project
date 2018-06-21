@@ -12,7 +12,7 @@ var DatatableRecordSelectionDemo = function () {
 				type: 'remote',
 				source: {
 					read: {
-						url: '../agency/data/briefs-list.php',
+						url: '/briefs',
 					}
 				},
 				pageSize: 5,

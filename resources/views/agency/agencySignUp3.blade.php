@@ -28,22 +28,23 @@
 									What type of clients would you like to work with?
 								</h3>
 							</div>
-							<form class="m-login__form m-form" action="">
+							<form class="m-login__form m-form" action="/client_types" method="POST">
+								{{ csrf_field() }}
 								<div class="form-group m-form__group">
 									<label class="select2-container--default">Select the budgets you want to work with:</label>
 								<div class="m-ion-range-slider">
-												<input type="hidden" id="m_slider_3"/>
+												<input name="budget" type="hidden" id="m_slider_3"/>
 											</div>
 								</div>
 								<div class="form-group m-form__group">
 									<label class="select2-container--default">Can work with clients in: </label><br/> 
 								<div class="m-ion-range-slider">
-												<input type="hidden" id="distance"/>
+												<input name="kmRange" type="hidden" id="distance"/>
 											</div>
 								</div>
 								<div class="form-group m-form__group">
 									<label class="select2-container--default">Languages supported?</label><br/> 
-									<select class="form-control m_select2_3" id="matchLanguages" name="services" multiple="multiple">
+									<select class="form-control m_select2_3" id="matchLanguages" name="services[]" multiple="multiple">
 											
 										<option value="1">
 											Language 1 (TBC)
@@ -60,11 +61,9 @@
 								<div class="m-form__actions m-form__actions">
 										<div class="row">
 											<div class="col-lg-12 ml-lg-auto">
-												<a href="index.php">
-												<button type="button" class="btn btn-primary">
+												<button type="submit" class="btn btn-primary">
 													Complete Setup
 												</button>
-													</a>
 											</div>
 										</div>
 									</div>
