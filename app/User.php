@@ -32,4 +32,15 @@ class User extends Authenticatable
     public function ClientType(){
         return $this->hasOne('App\ClientType','agency_id');
     }
+    public function CompanyInfo(){
+        return $this->hasOne('App\CompanyInfo','client_id');
+    }
+    public function MoreInfo()
+    {
+        return $this->hasOne('App\MoreInfo','client_id');
+    }
+    public function ServiceNeeded()
+    {
+        return $this->hasOne('App\ServiceNeeded','client_id');
+    }
 }

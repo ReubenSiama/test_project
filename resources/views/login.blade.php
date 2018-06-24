@@ -87,7 +87,7 @@
 								Don't have an account yet ?
 							</span>
 							&nbsp;&nbsp;
-							<a href="../index.html" class="m-link m-link--dark m-login__account-link">
+							<a href="/" class="m-link m-link--dark m-login__account-link">
 								Sign Up
 							</a>
 						</div>
@@ -99,7 +99,7 @@
 		<!-- end:: Page -->   
 	    		    
     	<!--begin::Base Scripts -->
-		@include('layouts.client.baseScripts')
+		@include('layouts.baseScripts')
 		<!--end::Base Scripts -->   
         <!--begin::Page Snippets -->
 		<script src="js/login.js" type="text/javascript"></script>

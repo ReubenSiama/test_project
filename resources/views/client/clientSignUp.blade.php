@@ -22,15 +22,19 @@
 									Enter your details to create your account:
 								</div><br>
 							</div>
-							<form class="m-login__form m-form" action="">
+							<form class="m-login__form m-form" action="/clientSignUp" method="POST">
+								{{ csrf_field() }}
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="Company name" name="companyName">
+									<span id="nameError" style="color:red"></span>
+									<input value="{{ old('name') }}" id="name" class="form-control m-input" type="text" placeholder="Company name" name="name">
 								</div>
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off" data-toggle="m-tooltip" data-placement="right" title="We’ll notify you when you when agencies express interest">
+									<span id="emailError" style="color:red"></span>
+									<input value="{{ old('email') }}" id="email" class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off" data-toggle="m-tooltip" data-placement="right" title="We’ll notify you when you when agencies express interest">
 								</div>
 								<div class="form-group m-form__group">
-									<input class="form-control m-input" type="password" placeholder="Password" name="password">
+									<span id="passwordError" style="color:red"></span>
+									<input id="password" class="form-control m-input" type="password" placeholder="Password" name="password">
 								</div>
 								<div class="m-login__form-sub">
 									<label class="m-checkbox m-checkbox--focus">
@@ -47,11 +51,9 @@
 								<div class="m-form__actions m-form__actions">
 										<div class="row">
 											<div class="col-lg-12 ml-lg-auto">
-												<a href="client-setup.php">
-												<button type="button" class="btn btn-primary">
+												<button type="submit" class="btn btn-primary">
 													Sign Up
-												</button></a>
-													
+												</button>
 												<button type="reset" class="btn btn-secondary">
 													Cancel
 												</button>
@@ -71,6 +73,32 @@
 		<!--end::Base Scripts -->   
         <!--begin::Page Snippets -->
 		<script src="js/login.js" type="text/javascript"></script>
+		@if ($errors->has('name'))
+		@foreach($errors->get('name') as $nameError)
+		<script>
+			document.getElementById('name').style.borderColor = "red";
+			document.getElementById('nameError').innerHTML= "{{ $nameError }}";
+		</script>
+		@endforeach
+		@endif
+
+		@if ($errors->has('email'))
+		@foreach($errors->get('email') as $emailError)
+		<script>
+			document.getElementById('email').style.borderColor = "red";
+			document.getElementById('emailError').innerHTML= "{{ $emailError }}";
+		</script>
+		@endforeach
+		@endif
+
+		@if ($errors->has('password'))
+		@foreach($errors->get('password') as $passwordError)
+		<script>
+			document.getElementById('password').style.borderColor = "red";
+			document.getElementById('passwordError').innerHTML= "{{ $passwordError }}";
+		</script>
+		@endforeach
+		@endif
 <!--end::Page Snippets -->
 	</body>
 	<!-- end::Body -->

@@ -100,7 +100,8 @@
 1) Use m-form--label-align-left class to alight the form input lables to the right
 2) Use m-form--state class to highlight input control borders on form validation
 -->
-                    <form class="m-form m-form--label-align-left- m-form--state-" id="m_form" action="index.php">
+                    <form class="m-form m-form--label-align-left- m-form--state-" id="m_form" action="/client-set-up" method="POST">
+                        {{ csrf_field() }}
                         <!--begin: Form Body -->
                         <div class="m-portlet__body">
                             <div class="m-wizard__form-step" id="m_wizard_form_step_0">
@@ -113,15 +114,15 @@
                                         </div>
                                         <div class="form-group m-form__group">
                                             <input class="form-control m-input" type="text" name="company" width="70%"
-                                                   value="splink" disabled/>
+                                                   value="{{ Auth::user()->name }}" disabled/>
                                         </div>
                                         <div class="form-group m-form__group">
                                             <input class="form-control m-input" type="email" name="email" width="70%"
-                                                   value="info@splink.com" disabled/>
+                                                   value="{{ Auth::user()->email }}" disabled/>
                                         </div>
                                         <div class="form-group m-form__group">
                                             <input class="form-control m-input" type="password" name="password"
-                                                   width="70%" value="password" disabled/>
+                                                   width="70%" value="" disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +149,7 @@
                                                    name="website" width="70%">
                                         </div>
                                         <div class="form-group m-form__group">
-                                            <select class="form-control m-select2" id="location" name="param"
+                                            <select class="form-control m-select2" id="location" name="bases[]"
                                                     multiple="multiple">
                                                 <option value="Any">
                                                     Worldwide
@@ -184,7 +185,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group m-form__group">
-                                            <select class="form-control m-select2" id="industry" name="param"
+                                            <select class="form-control m-select2" id="industry" name="industry"
                                                     width="70%">
                                                 <option value="">
                                                     What industry are you in?
@@ -236,13 +237,13 @@
                                                 <label class="select2-container--default">What’s your average monthly
                                                     budget?</label><br><br>
                                                 <div class="m-ion-range-slider">
-                                                    <input type="hidden" id="m_slider_3" width="100%"/>
+                                                    <input name="budget" type="hidden" id="m_slider_3" width="100%"/>
                                                 </div>
                                             </div>
                                             <div class="form-group m-form__group">
                                                 <label style="text-align: center;" class="select2-container--default">Looking
                                                     for an agency within:</label><br/>
-                                                <select class="form-control m-select2" id="location-search" name="param"
+                                                <select class="form-control m-select2" id="location-search" name="locations[]"
                                                         multiple="multiple" style="width: 100%;">
                                                     <option value="Any">
                                                         Worldwide
@@ -281,7 +282,7 @@
                                                 <label style="text-align: center;">What services are you looking
                                                     for?</label><br/>
                                                 <select class="form-control m_select2_3" id="matchServices"
-                                                        name="services" multiple="multiple" style="width: 100%;">
+                                                        name="services[]" multiple="multiple" style="width: 100%;">
                                                     <optgroup label="Strategy">
                                                         <option value="insightsPlanning">
                                                             Insights & Planning
@@ -386,7 +387,7 @@
                                                 <label style="text-align: center;">What languages do you need support
                                                     with?</label><br/>
                                                 <select class="form-control m_select2_3" id="matchLanguages"
-                                                        name="services" multiple="multiple" style="width: 100%;">
+                                                        name="languages[]" multiple="multiple" style="width: 100%;">
 
                                                     <option value="1">
                                                         Language 1 (TBC)
@@ -416,7 +417,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group m-form__group">
                                                     <div class="m-ion-range-slider trans">
-                                                        <input type="hidden" id="growth" width="100%"/>
+                                                        <input name="growth_strategy" type="hidden" id="growth" width="100%"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -431,7 +432,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group m-form__group">
                                                     <div class="m-ion-range-slider trans">
-                                                        <input type="hidden" id="market" width="100%"/>
+                                                        <input name="market" type="hidden" id="market" width="100%"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -445,7 +446,7 @@
                                             <div class="col-lg-6">
                                                 <div class="form-group m-form__group">
                                                     <div class="m-ion-range-slider trans">
-                                                        <input type="hidden" id="competition" width="100%"/>
+                                                        <input name="level" type="hidden" id="competition" width="100%"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -476,7 +477,7 @@
                                         </a>
                                     </div>
                                     <div class="col-lg-3 m--align-right">
-                                        <a href="index.php" class="btn btn-success m-btn m-btn--custom m-btn--icon"
+                                        <button onclick="submitForm()" type="submit" class="btn btn-success m-btn m-btn--custom m-btn--icon"
                                            data-wizard-action="submit">
 															<span>
 																<i class="la la-check"></i>
@@ -485,7 +486,7 @@
 																	Submit
 																</span>
 															</span>
-                                        </a>
+                                        </button>
                                         <a href="#" class="btn btn-primary m-btn m-btn--custom m-btn--icon"
                                            data-wizard-action="next">
 															<span>
@@ -515,14 +516,20 @@
 
 <!-- end:: Body -->
 <!--begin::Base Scripts -->
-@include('layouts.client.baseScripts')
+@include('layouts.client.base-scripts')
 <!--end::Base Scripts -->
 <!--begin::Page Vendors -->
-<script src="js/login.js" type="text/javascript"></script>
-<script src="js/select2.js" type="text/javascript"></script>
-<script src="js/ion-range-slider.js" type="text/javascript"></script>
-<script src="js/form-controls.js" type="text/javascript"></script>
-<script src="js/wizard.js" type="text/javascript"></script>
+<script src="js/client/login.js" type="text/javascript"></script>
+<script src="js/client/select2.js" type="text/javascript"></script>
+<script src="js/client/ion-range-slider.js" type="text/javascript"></script>
+<script src="js/client/form-controls.js" type="text/javascript"></script>
+<script src="js/client/wizard.js" type="text/javascript"></script>
+<script>
+    function submitForm(){
+        var myForm = document.getElementById('m_form');
+        myForm.submit();
+    }
+</script>
 <!--end::Page Vendors -->
 <!--begin::Page Snippets -->
 <!--end::Page Snippets -->

@@ -33,32 +33,24 @@ class AgencyPostController extends Controller
             Auth::loginUsingId($agency->id);
             return redirect('/agencyDashboard');
         }else{
-            return "Something Went Wrong";
+            return back()->with('Error','Something went wrong!!!');
         }
     }
     public function postAboutAgency(Request $request)
     {
-        $locations = "";
-        $services = "";
-        if($request->matchLocation){
-            $locations = implode(", ",$request->matchLocation);
-        }
-        if($request->services){
-            $services = implode(", ",$request->services);
-        }
         $industry = implode(", ",$request->industry);
         $about = new AboutAgency;
         $about->agency_id = Auth::user()->id;
         $about->contatct_name = $request->contactName;
         $about->job_title = $request->contactJob;
         $about->website = $request->website;
-        $about->base = $locations;
+        $about->base = $request->matchLocation ? implode(", ", $request->matchLocation) : "";
         $about->industries_specialize = $industry;
-        $about->services_offer = $services;
+        $about->services_offer = $request->services ? implode(", ", $request->services) : "";
         if($about->save()){
             return redirect('/agencyDashboard');
         }else{
-            return "Something Went Wrong";
+            return back()->with('Error','Something went wrong!!!');
         }
     }
     public function postClientTypes(Request $request)
@@ -69,8 +61,8 @@ class AgencyPostController extends Controller
         }
         $types = new ClientType;
         $types->agency_id = Auth::user()->id;
-        $types->budget = $request->budget;
-        $types->clients_range = $request->kmRange;
+        $types->budget = str_replace(';', '-', $request->budget);;
+        $types->clients_range = str_replace(';', '-', $request->kmRange);
         $types->languages = $languages;
         if($types->save()){
             return redirect('/agencyDashboard');

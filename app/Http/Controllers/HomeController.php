@@ -12,14 +12,6 @@ class HomeController extends Controller
     {
         return view('index');
     }
-    public function getClientSignUp()
-    {
-        return view('client.clientSignUp');
-    }
-    public function getClientSetUp()
-    {
-        return view('client.clientSetUp');
-    }
     public function logout()
     {
         Auth::logout();
@@ -38,7 +30,7 @@ class HomeController extends Controller
                         return redirect('/agencyDashboard');
                         break;
                     case 2:
-                        return "Client";
+                        return redirect('/clientDashboard');
                         break;
                     default:
                         return back();
