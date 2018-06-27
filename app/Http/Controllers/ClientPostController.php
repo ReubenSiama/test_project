@@ -11,19 +11,14 @@ use App\UserType;
 use App\CompanyInfo;
 use App\ServiceNeeded;
 use App\MoreInfo;
+use App\UserLanguage;
+use App\Http\Requests\ClientSignupRequest;
+use App\Http\Requests\ClientSetupRequest;
 
 class ClientPostController extends Controller
 {
-    public function postClientSignUp(Request $request)
+    public function postClientSignUp(ClientSignupRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6'
-        ]);
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
         $type = UserType::where('type',"Client")->pluck('id')->first();
         $user = new User;
         $user->name = $request->name;
@@ -37,18 +32,8 @@ class ClientPostController extends Controller
             return back()->with('Error','Something went wrong!!!');
         }
     }
-    public function postClientSetUp(Request $request)
+    public function postClientSetUp(ClientSetupRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'contactName' => 'required',
-            'jobTitle' => 'required',
-            'website' => 'required',
-            'bases' => 'required',
-            'industry' => 'required'
-        ]);
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
         $companyInfo = new CompanyInfo;
         $companyInfo->client_id = Auth::user()->id;
         $companyInfo->contact_name = $request->contactName;
@@ -57,19 +42,28 @@ class ClientPostController extends Controller
         $companyInfo->base = $request->bases ? implode(", ",$request->bases) : "";
         $companyInfo->industry = $request->industry;
         $companyInfo->save();
+
         $services = new ServiceNeeded;
         $services->client_id = Auth::user()->id;
         $services->budget = str_replace(';', '-', $request->budget);
         $services->location = $request->locations ? implode(", ", $request->locations) : "";
         $services->services = $request->services ? implode(", ", $request->services) : "";
-        $services->languages = $request->languages ? implode(", ", $request->languages) : "";
         $services->save();
+
+        foreach($request->languages as $language){
+            $userLanguage = new UserLanguage;
+            $userLanguage->user_id = Auth::user()->id;
+            $userLanguage->language_id = $language;
+            $userLanguage->save();
+        }
+            
         $moreInfo = new MoreInfo;
         $moreInfo->client_id = Auth::user()->id;
         $moreInfo->growth_strategy = $request->growth_strategy;
         $moreInfo->market = $request->market;
         $moreInfo->competition_level = $request->level;
         $moreInfo->save();
+
         return redirect('/clientDashboard');
     }
 }

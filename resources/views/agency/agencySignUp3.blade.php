@@ -45,17 +45,11 @@
 								<div class="form-group m-form__group">
 									<label class="select2-container--default">Languages supported?</label><br/> 
 									<select class="form-control m_select2_3" id="matchLanguages" name="services[]" multiple="multiple">
-											
-										<option value="1">
-											Language 1 (TBC)
+										@foreach($languages as $language)
+										<option value="{{ $language->id }}">
+											{{ $language->language }}
 										</option>
-										<option value="2">
-											Language 2 (TBC)
-										</option>
-										<option value="3">
-											Language 3 (TBC)
-										</option>
-											
+										@endforeach
 									</select>
 								</div>
 								<div class="m-form__actions m-form__actions">

@@ -7,22 +7,16 @@ use App\User;
 use App\UserType;
 use App\AboutAgency;
 use App\ClientType;
+use App\UserLanguage;
 use Validator;
 use Hash;
 use Auth;
+use App\Http\Requests\AgencySignupRequest;
 
 class AgencyPostController extends Controller
 {
-    public function postAgencySignUp(Request $request)
+    public function postAgencySignUp(AgencySignupRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'name' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6'
-        ]);
-        if($validator->fails()){
-            return back()->withErrors($validator)->withInput();
-        }
         $type = UserType::where('type',"Agency")->pluck('id')->first();
         $agency = new User;
         $agency->name = $request->name;
@@ -55,15 +49,17 @@ class AgencyPostController extends Controller
     }
     public function postClientTypes(Request $request)
     {
-        $languages = "";
-        if($request->services){
-            $languages = implode(", ", $request->services);
+        foreach($request->services as $language)
+        {
+            $userLanguage = new UserLanguage;
+            $userLanguage->user_id = Auth::user()->id;
+            $userLanguage->language_id = $language;
+            $userLanguage->save();
         }
         $types = new ClientType;
         $types->agency_id = Auth::user()->id;
         $types->budget = str_replace(';', '-', $request->budget);;
         $types->clients_range = str_replace(';', '-', $request->kmRange);
-        $types->languages = $languages;
         if($types->save()){
             return redirect('/agencyDashboard');
         }

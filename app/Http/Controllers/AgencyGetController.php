@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\AboutAgency;
 use App\ClientType;
+use App\Language;
 use Auth;
 
 class AgencyGetController extends Controller
@@ -33,6 +34,7 @@ class AgencyGetController extends Controller
     }
     public function getAgencySignUp3()
     {
-        return view('agency.agencySignUp3');
+        $languages = Language::all();
+        return view('agency.agencySignUp3',['languages'=>$languages]);
     }
 }

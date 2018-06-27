@@ -43,4 +43,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\ServiceNeeded','client_id');
     }
+    public function Language()
+    {
+        return $this->hasMany('App\Language');
+    }
 }
